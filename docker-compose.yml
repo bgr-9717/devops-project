@@ -1,0 +1,30 @@
+services:
+
+  api:
+    build: ./app/backend
+    container_name: devops-api
+
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/backend:/app
+
+    environment:
+      NODE_ENV: development
+      MONGO_URL: mongodb://wrongmongo:27017/test
+
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    container_name: mongodb
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
